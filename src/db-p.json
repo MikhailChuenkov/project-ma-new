@@ -71,33 +71,8 @@
       "email": "mikhail@mail.ru",
       "password": "123",
       "id": 1
-    },
-    {
-      "name": "Elena",
-      "email": "elena@mail.ru",
-      "password": "321",
-      "id": 2
-    },
-    {
-      "name": "Ivan",
-      "email": "ivan@mail.ru",
-      "password": "132",
-      "id": 3
-    },
-    {
-      "name": "Ksusha",
-      "email": "ksusha@mail.ru",
-      "password": "312",
-      "id": 4
     }
   ],
-  "customer-online-p": [
-    {
-      "name": "Elena",
-      "email": "elena@mail.ru",
-      "password": "321",
-      "id": 1
-    }
-  ],
+  "customer-online-p": [],
   "customer-login-p": []
 }

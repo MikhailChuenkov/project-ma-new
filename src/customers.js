@@ -7,6 +7,7 @@ function renderMyAccount() {
         $('#registrationMassageBox').css('display', 'block');
         $('#registrationMassageDefault').css('display', 'none');
         $("#registrationMassageCustomer").empty();
+        $("#myOfficeName").empty();
         $('#registrationMassageCustomer').append(
           $('<div />', {
             text: 'Hi, ' + customer[0].name,
@@ -19,6 +20,21 @@ function renderMyAccount() {
         );
         $('.myAccountHeader a').attr(
           'href', 'myOffice.html'
+        );
+        $('#myOfficeName').append(
+          $('<div />', {
+            text: 'Hi, ' + customer[0].name,
+          })
+        );
+        $('#formUserChangeName').append(
+          $('<button />', {
+            type: 'submit',
+            class: 'specification-choose-buttom-grey',
+            id: 'userChangeName-bnt',
+            text: 'Change Name',
+            'data-name': customer[0].name,
+            'data-idUser': customer[0].idUser,
+          })
         );
       } else {
         $('#registrationMassageBox').css('display', 'none');
@@ -123,6 +139,7 @@ function failureMassageSuccess() {
                     name: item.name,
                     email: item.email,
                     password: item.password,
+                    idUser: item.id,
                   },
                 });
                 return true;
@@ -169,16 +186,55 @@ function failureMassageSuccess() {
      * Удаляем конкретного покупателя из общего списка
      */
     $("#registration").on("click", "#registrationDel", function (event) {
-
       $.ajax({
         type: "DELETE",
-        url: "http://localhost:3000/customers-p/" + "4",
+        url: "http://localhost:3000/customers-p/" + "2",
         success: function () {
           console.log('del');
         }
-
       });
       event.preventDefault();
     });
+
+    /**
+     * Изменяем имя потльзователя
+     */
+    $("#formUserChangeName").on("click", "#userChangeName-bnt", function (event) {
+      let userChangeName = {
+        name: $('#userChangeName').val(),
+      };
+      console.log(userChangeName.name);
+      // /**
+      //  * Удаляем покупателя из общего списка
+      //  */
+      // $.ajax({
+      //   type: "DELETE",
+      //   url: "http://localhost:3000/customers-p/" + $(this).attr('data-idUser'),
+      //   success: function () {
+      //     console.log('del');
+      //   }
+      // });
+      $.get("http://localhost:3000/customer-online-p/" , {}, function (customer) {
+        console.log(customer[0].idUser);
+        /**
+         * Добавляем пользователя с новым именем
+         */
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/customers-p/" + customer[0].idUser,
+            success: function () {
+              console.log('add ' + userChangeName.name);
+            }
+          // data: {
+          //   name: userChangeName.name,
+          //   email: customer[0].email,
+          //   password: customer[0].password,
+          //   idUser: customer[0].id,
+          // },
+        });
+      });
+      event.preventDefault();
+    });
+
   });
 })(jQuery);
