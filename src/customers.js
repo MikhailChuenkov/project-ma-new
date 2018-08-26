@@ -2,48 +2,49 @@
  * Оповещаем о входе в личный кабинет
  */
 function renderMyAccount() {
-  $.get("http://localhost:3000/customer-online-p/", {}, function (customer) {
-      if (customer[0]) {
-        $('#registrationMassageBox').css('display', 'block');
-        $('#registrationMassageDefault').css('display', 'none');
-        $("#registrationMassageCustomer").empty();
-        $("#myOfficeName").empty();
-        $('#registrationMassageCustomer').append(
-          $('<div />', {
-            text: 'Hi, ' + customer[0].name,
-          })
-        ).append(
-          $('<a />', {
-            text: 'My office',
-            href: 'myOffice.html',
-          })
-        );
-        $('.myAccountHeader a').attr(
-          'href', 'myOffice.html'
-        );
-        $('#myOfficeName').append(
-          $('<div />', {
-            text: 'Hi, ' + customer[0].name,
-          })
-        );
-        $('#formUserChangeName').append(
-          $('<button />', {
-            type: 'submit',
-            class: 'specification-choose-buttom-grey',
-            id: 'userChangeName-bnt',
-            text: 'Change Name',
-            'data-name': customer[0].name,
-            'data-idUser': customer[0].idUser,
-          })
-        );
-      } else {
-        $('#registrationMassageBox').css('display', 'none');
-        $('#registrationMassageDefault').css('display', 'block');
-        $('.myAccountHeader a').attr(
-          'href', 'myAccount.html'
-        );
-      }
-  }, "json");
+  $.get('http://localhost:3000/customer-online-p/', {}, function (customer) {
+    if (customer[0]) {
+      $('#registrationMassageBox').css('display', 'block');
+      $('#registrationMassageDefault').css('display', 'none');
+      $('#registrationMassageCustomer').empty();
+      $('#myOfficeName').empty();
+      $('#userChangeName-bnt').empty();
+      $('#registrationMassageCustomer').append(
+        $('<div />', {
+          text: 'Hi, ' + customer[0].name,
+        })
+      ).append(
+        $('<a />', {
+          text: 'My office',
+          href: 'myOffice.html',
+        })
+      );
+      $('.myAccountHeader a').attr(
+        'href', 'myOffice.html'
+      );
+      $('#myOfficeName').append(
+        $('<div />', {
+          text: 'Hi, ' + customer[0].name,
+        })
+      );
+      $('#formUserChangeName').append(
+        $('<button />', {
+          type: 'submit',
+          class: 'specification-choose-buttom-grey',
+          id: 'userChangeName-bnt',
+          text: 'Change Name',
+          'data-name': customer[0].name,
+          'data-idUser': customer[0].idUser,
+        })
+      );
+    } else {
+      $('#registrationMassageBox').css('display', 'none');
+      $('#registrationMassageDefault').css('display', 'block');
+      $('.myAccountHeader a').attr(
+        'href', 'myAccount.html'
+      );
+    }
+  }, 'json');
   $('#failureMassageSuccess').empty();
   $('#loginMassageSuccess').empty();
 }
@@ -81,13 +82,28 @@ function failureMassageSuccess() {
   );
 }
 
+/**
+ * Показываем сообщение об успошной замене данных
+ */
+function changeMassageSuccess() {
+  $('#formUserChangeName').append(
+    $('<div />', {
+      class: 'footer-company-name',
+    }).append(
+      $('<span>', {
+        text: 'You have successfully changed your information',
+      })
+    )
+  );
+}
+
 (function ($) {
   $(document).ready(function () {
     renderMyAccount();
     /**
      * Нажатие на кнопку регистрации
      */
-    $("#registration").on("click", "#join-btn", function (event) {
+    $('#registration').on('click', '#join-btn', function (event) {
       let customer = {
         name: $('#registrationName').val(),
         email: $('#registrationEmail').val(),
@@ -97,8 +113,8 @@ function failureMassageSuccess() {
        * Отправляем на сервер данные регистрации
        */
       $.ajax({
-        type: "POST",
-        url: "http://localhost:3000/customers-p/",
+        type: 'POST',
+        url: 'http://localhost:3000/customers-p/',
         data: customer,
         success: function () {
           renderMyAccount();
@@ -106,8 +122,8 @@ function failureMassageSuccess() {
         }
       });
       $.ajax({
-        type: "POST",
-        url: "http://localhost:3000/customer-online-p/",
+        type: 'POST',
+        url: 'http://localhost:3000/customer-online-p/',
         data: customer,
       });
       event.preventDefault();
@@ -116,7 +132,7 @@ function failureMassageSuccess() {
     /**
      * Нажатие на кнопку Login
      */
-    $("#login").on("click", "#login-btn", function (event) {
+    $('#login').on('click', '#login-btn', function (event) {
       let customerLogin = {
         email: $('#loginEmail').val(),
         password: $('#loginPassword').val(),
@@ -125,16 +141,16 @@ function failureMassageSuccess() {
        * Отправляем на сервер данные входа в личный кабинет
        */
       $.ajax({
-        type: "POST",
-        url: "http://localhost:3000/customer-login-p/",
+        type: 'POST',
+        url: 'http://localhost:3000/customer-login-p/',
         data: customerLogin,
         success: function () {
-          $.get("http://localhost:3000/customers-p/", {}, function (customer) {
+          $.get('http://localhost:3000/customers-p/', {}, function (customer) {
             if (customer.some(function (item) {
               if (item.email === customerLogin.email && item.password === customerLogin.password) {
                 $.ajax({
-                  type: "POST",
-                  url: "http://localhost:3000/customer-online-p/",
+                  type: 'POST',
+                  url: 'http://localhost:3000/customer-online-p/',
                   data: {
                     name: item.name,
                     email: item.email,
@@ -154,15 +170,15 @@ function failureMassageSuccess() {
               failureMassageSuccess();
             }
 
-          }, "json");
+          }, 'json');
         }
       });
       /**
        * Удаляем данные с сервера при входе в личный кабинет
        */
       $.ajax({
-        type: "DELETE",
-        url: "http://localhost:3000/customer-login-p/1",
+        type: 'DELETE',
+        url: 'http://localhost:3000/customer-login-p/1',
       });
       event.preventDefault();
       $('#login')[0].reset();
@@ -170,10 +186,10 @@ function failureMassageSuccess() {
     /**
      * Выход из личного кабинета
      */
-    $("#registrationMassageBox").on("click", "#logout-btn", function (event) {
+    $('#registrationMassageBox').on('click', '#logout-btn', function (event) {
       $.ajax({
-        type: "DELETE",
-        url: "http://localhost:3000/customer-online-p/1",
+        type: 'DELETE',
+        url: 'http://localhost:3000/customer-online-p/1',
         success: function () {
           renderMyAccount();
           console.log('exit');
@@ -185,10 +201,10 @@ function failureMassageSuccess() {
     /**
      * Удаляем конкретного покупателя из общего списка
      */
-    $("#registration").on("click", "#registrationDel", function (event) {
+    $('#registration').on('click', '#registrationDel', function (event) {
       $.ajax({
-        type: "DELETE",
-        url: "http://localhost:3000/customers-p/" + "2",
+        type: 'DELETE',
+        url: 'http://localhost:3000/customers-p/' + '2',
         success: function () {
           console.log('del');
         }
@@ -199,41 +215,42 @@ function failureMassageSuccess() {
     /**
      * Изменяем имя потльзователя
      */
-    $("#formUserChangeName").on("click", "#userChangeName-bnt", function (event) {
+    $('#formUserChangeName').on('click', '#userChangeName-bnt', function (event) {
       let userChangeName = {
         name: $('#userChangeName').val(),
       };
-      console.log(userChangeName.name);
-      // /**
-      //  * Удаляем покупателя из общего списка
-      //  */
-      // $.ajax({
-      //   type: "DELETE",
-      //   url: "http://localhost:3000/customers-p/" + $(this).attr('data-idUser'),
-      //   success: function () {
-      //     console.log('del');
-      //   }
-      // });
-      $.get("http://localhost:3000/customer-online-p/" , {}, function (customer) {
-        console.log(customer[0].idUser);
+      $.get('http://localhost:3000/customer-online-p/', {}, function (customer) {
         /**
-         * Добавляем пользователя с новым именем
+         * Изменяем данные пользователя в основной базе данных
          */
         $.ajax({
-          type: "POST",
-          url: "http://localhost:3000/customers-p/" + customer[0].idUser,
-            success: function () {
-              console.log('add ' + userChangeName.name);
-            }
-          // data: {
-          //   name: userChangeName.name,
-          //   email: customer[0].email,
-          //   password: customer[0].password,
-          //   idUser: customer[0].id,
-          // },
+          type: 'PATCH',
+          url: 'http://localhost:3000/customers-p/' + customer[0].idUser,
+          data: {
+            name: userChangeName.name,
+            email: customer[0].email,
+            password: customer[0].password,
+            idUser: customer[0].id,
+          },
+        });
+        event.preventDefault();
+        /**
+         * Изменяем данные пользователя в карточке текущего пользователя
+         */
+        $.ajax({
+          type: 'PATCH',
+          url: 'http://localhost:3000/customer-online-p/1',
+          data: {
+            name: userChangeName.name,
+            email: customer[0].email,
+            password: customer[0].password,
+            idUser: customer[0].id,
+          },
         });
       });
       event.preventDefault();
+      changeMassageSuccess();
+      $('#formUserChangeName')[0].reset();
     });
 
   });

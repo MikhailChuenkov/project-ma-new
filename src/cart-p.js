@@ -1,4 +1,7 @@
-function renderGoodsList() {
+/**
+ * Показываем товары на странице
+ */
+function renderGoodsListViewAll() {
   $('#products').empty();
   $.get('http://localhost:3000/goods-p/', {}, function (goods) {
     let $products = $('#products');
@@ -61,6 +64,75 @@ function renderGoodsList() {
   }, 'json');
 }
 
+/**
+ * Показываем куртки
+ */
+function renderGoodsListJackets(idProdoct) {
+  $('#products').empty();
+  $.get('http://localhost:3000/goods-p/' + idProdoct, {}, function (goods) {
+    let $products = $('#products');
+    $products.append(
+      $('<div />', {
+        class: 'card-product-box',
+      })
+        .append(
+          $('<a />', {
+            href: 'single page.html',
+          })
+            .append(
+              $('<img />', {
+                src: goods.img,
+                class: 'card-product-img'
+              })
+            ).append(
+            $('<h2 />', {
+              text: goods.name,
+            })
+          ).append(
+            $('<h4 />', {
+              text: '$' + goods.price,
+            })
+          )
+        ).append(
+        $('<div />', {
+          class: 'add-flex',
+        })
+          .append(
+            $('<span />', {
+              href: '',
+              class: 'add-to-cart',
+            })
+              .append(
+                $('<div />', {
+                  class: 'add-to-cart-cont',
+                  'data-id': goods.id,
+                  'data-price': goods.price,
+                  'data-name': goods.name,
+                  'data-img': goods.img
+                })
+                  .append(
+                    $('<img />', {
+                      src: 'img/Forma 1 copy1.png'
+                    })
+                  )
+                  .append(
+                    $('<span />', {
+                      text: 'Add to Cart'
+                    })
+                  )
+              )
+          )
+      )
+    );
+
+    $('#products').append($products);
+  }, 'json');
+
+}
+
+/**
+ * Показывает товары в корзине
+ */
 function renderCart() {
   $('#cart').empty();
   $('#cart-total__cart-img').empty();
@@ -71,41 +143,41 @@ function renderCart() {
     let $tablecart = $('#table-cart');
     let total = 0;
     $tablecart.append(
-      $('<tr />',{
+      $('<tr />', {
         class: 'table-cart-title',
       })
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-first',
             text: 'PROUCT DETAILS'
           })
         )
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-second',
             text: 'UNITE PRICE'
           })
         )
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-second',
             text: 'QUANTITY'
           })
         )
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-second',
             text: 'SHIPPING'
           })
         )
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-second',
             text: 'SUBTOBAL'
           })
         )
         .append(
-          $('<th />',{
+          $('<th />', {
             class: 'table-cart-second',
             text: 'ACTION'
           })
@@ -113,75 +185,75 @@ function renderCart() {
     );
     goods.forEach(function (item) {
       $cart.append(
-          $('<div />', {
-            class: 'goods-box'
-          })
-            .append(
-              $('<a />', {
-                href: 'single%20page.html'
-              })
-                .append(
-                  $('<img />', {
-                    src: item.img,
-                    class: 'goods__cart-img'
-                  })
-                )
-            )
-            .append(
-              $('<div />', {
-                class: 'goods-box-param goods-box-param__cart-img'
-              })
-                .append(
-                  $('<a />', {
-                    href: 'single%20page.html',
-                    class: 'goods-title goods-title__cart-img',
-                    text: item.name,
-                  })
-                )
-                .append(
-                  $('<img />', {
-                    class: 'goods-stars goods-stars__cart-img',
-                    src: 'img/stars.png',
-                  })
-                )
-                .append(
-                  $('<span />', {
-                    class: 'goods-price goods-price__cart-img',
-                    text: item.quantity + ' x $' + +item.price,
-                  })
-                )
-            )
-            .append(
-              $('<div />', {
-                class: 'table-cart-action table-cart-action__cart-img'
-              })
-                .append(
-                  $('<a />', {
-                    href: '#',
-                    class: 'remove',
-                    'data-id': item.id,
-                    'data-price': item.price,
-                    'data-name': item.name,
-                    'data-quantity': item.quantity
-                  })
-                    .append(
-                      $('<div />', {
-                        class: 'table-cart-action-circle'
-                      })
-                        .append(
-                          $('<div />', {
-                            class: 'cross1 cross__center'
-                          })
-                        )
-                        .append(
-                          $('<div />', {
-                            class: 'cross2 cross__center'
-                          })
-                        )
-                    )
-                )
-            )
-        );
+        $('<div />', {
+          class: 'goods-box'
+        })
+          .append(
+            $('<a />', {
+              href: 'single%20page.html'
+            })
+              .append(
+                $('<img />', {
+                  src: item.img,
+                  class: 'goods__cart-img'
+                })
+              )
+          )
+          .append(
+            $('<div />', {
+              class: 'goods-box-param goods-box-param__cart-img'
+            })
+              .append(
+                $('<a />', {
+                  href: 'single%20page.html',
+                  class: 'goods-title goods-title__cart-img',
+                  text: item.name,
+                })
+              )
+              .append(
+                $('<img />', {
+                  class: 'goods-stars goods-stars__cart-img',
+                  src: 'img/stars.png',
+                })
+              )
+              .append(
+                $('<span />', {
+                  class: 'goods-price goods-price__cart-img',
+                  text: item.quantity + ' x $' + +item.price,
+                })
+              )
+          )
+          .append(
+            $('<div />', {
+              class: 'table-cart-action table-cart-action__cart-img'
+            })
+              .append(
+                $('<a />', {
+                  href: '#',
+                  class: 'remove',
+                  'data-id': item.id,
+                  'data-price': item.price,
+                  'data-name': item.name,
+                  'data-quantity': item.quantity
+                })
+                  .append(
+                    $('<div />', {
+                      class: 'table-cart-action-circle'
+                    })
+                      .append(
+                        $('<div />', {
+                          class: 'cross1 cross__center'
+                        })
+                      )
+                      .append(
+                        $('<div />', {
+                          class: 'cross2 cross__center'
+                        })
+                      )
+                  )
+              )
+          )
+      );
       $tablecart.append(
         $('<tr />', {
           class: 'table-cart-good',
@@ -244,10 +316,10 @@ function renderCart() {
             $('<td />')
               .append(
                 $('<input>', {
-                type: 'text',
-                value: item.quantity,
+                  type: 'text',
+                  value: item.quantity,
                   pattern: '[0-9]',
-              })
+                })
               )
           )
           .append(
@@ -320,8 +392,32 @@ function renderCart() {
 
 (function ($) {
   $(document).ready(function () {
-    renderGoodsList();
+    renderGoodsListViewAll();
     renderCart();
+    /**
+     * Слушаем category-ul. Ссылка Jackets
+     */
+    $('.category-ul').on('click', '.category-li', function () {
+      let good = {
+        category: $(this).attr('data-category'),
+      };
+      $.get('http://localhost:3000/goods-p/', {}, function (customer) {
+        customer.forEach(function (item) {
+          if (item.category === good.category) {
+
+            renderGoodsListJackets(item.id);
+
+          }
+        })
+      }, 'json');
+    });
+
+    /**
+     * Слушаем кнопку View All
+     */
+    $('.viewAll').on('click', '.viewAll-buttom', function () {
+      renderGoodsListViewAll();
+    });
     /**
      * Удаляем товар из корзины
      */
@@ -331,11 +427,10 @@ function renderCart() {
         url: 'http://localhost:3000/cart-p/' + $(this).attr('data-id'),
         success: function () {
           renderCart();
-
         }
       });
-      console.log($(this).attr('data-id'));
     });
+
     /**
      *Добавляем товар в корзину
      */
@@ -348,7 +443,7 @@ function renderCart() {
         quantity: 1
       };
       if ($('#cart [data-id="' + good.id + '"]').length) {
-        var $good = $('#cart [data-id=' + good.id + ']');
+        let $good = $('#cart [data-id=' + good.id + ']');
         console.log($good);
         $.ajax({
           type: 'PATCH',
