@@ -1,0 +1,95 @@
+{
+  "goods-p": [
+    {
+      "id": 1,
+      "name": "MANGO PEOPLE T-SHIRT",
+      "price": 68,
+      "img": "img/Layer 2.png",
+      "category": "t-shirts"
+    },
+    {
+      "id": 2,
+      "name": "BANANA PEOPLE ",
+      "price": 33,
+      "img": "img/Layer 3.png",
+      "category": "blouses"
+    },
+    {
+      "id": 3,
+      "name": "OLIVE PEOPLE ",
+      "price": 13,
+      "img": "img/Layer 4.png",
+      "category": "jackets"
+    },
+    {
+      "id": 4,
+      "name": "APPLE PEOPLE ",
+      "price": 43,
+      "img": "img/Layer 5.png",
+      "category": "dresses"
+    },
+    {
+      "id": 5,
+      "name": "BLACK PEOPLE ",
+      "price": 76,
+      "img": "img/Layer 6.png",
+      "category": "dresses"
+    },
+    {
+      "id": 6,
+      "name": "ORANGE PEOPLE ",
+      "price": 44,
+      "img": "img/Layer 7.png",
+      "category": "jackets"
+    },
+    {
+      "id": 7,
+      "name": "RED PEOPLE ",
+      "price": 36,
+      "img": "img/Layer 8.png",
+      "category": "pants"
+    },
+    {
+      "id": 8,
+      "name": "SIMPLE PEOPLE ",
+      "price": 72,
+      "img": "img/Layer 3.png",
+      "category": "blouses"
+    }
+  ],
+  "cart-p": [
+    {
+      "id": "7",
+      "price": "36",
+      "name": "RED PEOPLE ",
+      "img": "img/Layer 8.png",
+      "quantity": "2"
+    },
+    {
+      "id": "5",
+      "price": "76",
+      "name": "BLACK PEOPLE ",
+      "img": "img/Layer 6.png",
+      "quantity": "2"
+    }
+  ],
+  "customers-p": [
+    {
+      "name": "Mikhail",
+      "email": "mikhail@mail.ru",
+      "password": "123",
+      "id": 1,
+      "idUser": "1"
+    }
+  ],
+  "customer-online-p": [
+    {
+      "name": "Mikhail",
+      "email": "mikhail@mail.ru",
+      "password": "123",
+      "idUser": "1",
+      "id": 1
+    }
+  ],
+  "customer-login-p": []
+}
